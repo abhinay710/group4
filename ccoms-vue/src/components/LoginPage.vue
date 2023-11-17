@@ -70,9 +70,7 @@ export default {
 
       LoginService.login(credentials)
         .then(response => {
-          sessionStorage.setItem("userName", response.data.userName);
-          sessionStorage.setItem("designation", response.data.designation);
-
+          this.$store.commit('login', {userName:response.data.userName, designation: response.data.designation});
           if (response.data.designation === 'student') {
             this.$router.push("/menu-items").catch(() => { });
           } else {

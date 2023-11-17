@@ -11,7 +11,7 @@
             <p class="card-text"><strong>$ {{ menuItem.price }}</strong></p>
           </div>
           <div class="card-footer">
-            <button class="btn btn-primary btn-block">Add to Cart</button>
+            <button class="btn btn-primary btn-block" @click="addToCart(menuItem)">Add to Cart</button>
             
           </div>
         </div>
@@ -35,7 +35,19 @@ export default {
       MenuService.getMenuItems().then((response) => {
         this.menuItems = response.data
       })
-    }
+    },
+    addToCart(item) {
+      let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+      const existingItem = cartItems.find((cartItem) => cartItem.item.id === item.id);
+  
+      if (existingItem) {
+        existingItem.quantity++;
+      } else {
+        cartItems.push({ item, quantity: 1 });
+      }
+
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    },
   },
   created() {
     this.getMenuItems()

@@ -12,6 +12,9 @@ export default {
   name: 'App',
   components: {
     NavBar
+  },
+  mounted(){
+    this.$store.commit('initialiseStore')
   }
 }
 </script>

@@ -13,23 +13,28 @@
         <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
           <div>
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
-                <router-link to="/login"
-                  class="nav-link text-dark">Home</router-link>
-              </li>
               <li class="nav-item" >
-                <router-link to="/menu-items" class="nav-link text-dark">Menu</router-link>
+                <router-link to="/menu-items" v-if="$store.state.userName" class="nav-link text-dark">Menu</router-link>
               </li>
               <li class="nav-item">
-                <router-link to="/orders" class="nav-link text-dark">Orders</router-link>
+                <router-link to="/employees" v-if="$store.state.designation === 'manager'" class="nav-link text-dark">Employees</router-link>
               </li>
               <li class="nav-item">
-                <router-link to="/contact" class="nav-link text-dark">Contact</router-link>
+                <router-link to="/students" v-if="$store.state.designation === 'manager'" class="nav-link text-dark">Students</router-link>
+              </li>
+              <li class="nav-item">
+                <router-link to="/dining-halls" v-if="$store.state.designation === 'manager'" class="nav-link text-dark">Dining Halls</router-link>
+              </li>
+              <li class="nav-item">
+                <router-link to="/orders" v-if="$store.state.userName && $store.state.designation !== 'student'" class="nav-link text-dark">Orders</router-link>
               </li>
             </ul>
           </div>
           <div>
-            <button class="btn btn-primary" v-on:click="logout()">Log Out</button>
+            <button class="btn btn-primary"  v-if="$store.state.userName" v-on:click="logout()">Log Out</button>
+            <button class="btn btn-primary" v-if="$store.state.designation === 'student'">
+              <router-link to="/cart"  class="nav-link text-dark">Cart</router-link>
+            </button>
           </div>
         </div>
       </div>
@@ -40,7 +45,7 @@
 export default {
   methods: {
     logout() {
-      sessionStorage.clear();
+      this.$store.commit('logout');
       this.$router.push('/login');
     },
   }
