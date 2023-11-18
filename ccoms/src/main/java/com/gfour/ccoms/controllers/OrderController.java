@@ -9,9 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.gfour.ccoms.dtos.OrdersDTO;
-import com.gfour.ccoms.entities.Menu;
 import com.gfour.ccoms.entities.Orders;
-import com.gfour.ccoms.repositories.MenuRepo;
+
 import com.gfour.ccoms.repositories.OrdersRepo;
 
 @RestController

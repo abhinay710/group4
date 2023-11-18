@@ -3,7 +3,6 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-gold">
       <div class="container">
         <router-link to="/">
-          <!-- Replace 'path-to-your-logo.png' with the actual path to your logo image -->
           <img src="../assets/cmu.png" alt="Logo" class="navbar-brand-logo">
         </router-link>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -13,34 +12,41 @@
         <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
           <div>
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item" >
+              <!-- Menu item for all users -->
+              <li class="nav-item">
                 <router-link to="/menu-items" v-if="$store.state.userName" class="nav-link text-dark">Menu</router-link>
               </li>
-              <li class="nav-item">
-                <router-link to="/employees" v-if="$store.state.designation === 'manager'" class="nav-link text-dark">Employees</router-link>
+              <!-- Orders option in navbar -->
+              <li class="nav-item" v-if="$store.state.userName && $store.state.designation === 'manager'">
+                <router-link to="/orders" class="nav-link text-dark">Orders</router-link>
               </li>
-              <li class="nav-item">
-                <router-link to="/students" v-if="$store.state.designation === 'manager'" class="nav-link text-dark">Students</router-link>
+              <!-- Orders dropdown with additional reports based on designation -->
+              <li class="nav-item dropdown" v-if="$store.state.userName && $store.state.designation === 'manager'">
+                <button class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" type="button"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Reports
+                </button>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <router-link to="/student-list" class="dropdown-item">Generate Student Report</router-link>
+                  <router-link to="/employee-list" class="dropdown-item">Generate Employee Report</router-link>
+                  <router-link to="/dining-hall-list" class="dropdown-item">Generate Dining Hall Report</router-link>
+                </div>
               </li>
-              <li class="nav-item">
-                <router-link to="/dining-halls" v-if="$store.state.designation === 'manager'" class="nav-link text-dark">Dining Halls</router-link>
-              </li>
-              <li class="nav-item">
-                <router-link to="/orders" v-if="$store.state.userName && $store.state.designation !== 'student'" class="nav-link text-dark">Orders</router-link>
+              <!-- Cart for students -->
+              <li class="nav-item" v-if="$store.state.designation === 'student'">
+                <router-link to="/cart" class="nav-link text-dark">Cart</router-link>
               </li>
             </ul>
           </div>
           <div>
-            <button class="btn btn-primary"  v-if="$store.state.userName" v-on:click="logout()">Log Out</button>
-            <button class="btn btn-primary" v-if="$store.state.designation === 'student'">
-              <router-link to="/cart"  class="nav-link text-dark">Cart</router-link>
-            </button>
+            <button class="btn btn-primary" v-if="$store.state.userName" v-on:click="logout()">Log Out</button>
           </div>
         </div>
       </div>
     </nav>
   </div>
 </template>
+
 <script>
 export default {
   methods: {
