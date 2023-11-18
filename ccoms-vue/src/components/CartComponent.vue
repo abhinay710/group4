@@ -1,32 +1,55 @@
 <template>
-  <div>
-    <h2>Your Cart</h2>
-    <ul>
-      <li v-for="(cartItem, index) in cartItems" :key="index" class="cart-item">
-        <div class="card">
-          <div class="card-text">
-            <div>
-              <h5 class="card-title">{{ cartItem.item.itemName }}</h5>
-              <span class="item-price">${{ cartItem.item.price.toFixed(2) }}</span>
-            </div>
-            <div class="card-body">
-              <span class="quantity-controls">
-                <button @click="updateQuantity(index, 'decrease')" class="btn btn-secondary">-</button>
-                <span class="quantity">{{ cartItem.quantity }}</span>
-                <button @click="updateQuantity(index, 'increase')" class="btn btn-secondary">+</button>
-                <button @click="removeFromCart(index)" class="btn btn-danger">Remove</button>
-              </span>
-            </div>
-          </div>
-        </div>
-      </li>
-    </ul>
-    <p>Total: ${{ totalPrice }}</p>
+  <div class="container mt-5">
+    <h2>Your Shopping Cart</h2>
+    <div v-if="cartItems.length === 0" class="alert bg-gold" role="alert">
+      Your cart is empty. Start shopping now!
+    </div>
+    <div v-else>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Product</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(cartItem, index) in cartItems" :key="index">
+            <td>{{ cartItem.item.itemName }}</td>
+            <td>${{ cartItem.item.price.toFixed(2) }}</td>
+            <td>
+              <div class="input-group justify-content-center">
+                <button class="btn btn-outline-secondary" type="button" @click="decreaseQuantity(index)">-</button>
+                <input type="number" v-model="cartItem.quantity" min="1" class="form-control custom-input"
+                  @change="updateQuantity(index)">
+                <button class="btn btn-outline-secondary" type="button" @click="increaseQuantity(index)">+</button>
+              </div>
+            </td>
+            <td>${{ (cartItem.item.price * cartItem.quantity).toFixed(2) }}</td>
+            <td>
+              <button class="btn btn-danger btn-sm" @click="removeFromCart(index)">Remove</button>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3"></td>
+            <td class="text-right" colspan="2">
+              <strong>Total: ${{ totalPrice }}</strong>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <button class="btn bg-gold mt-3 text-dark" @click="checkout" >Checkout</button>
+    </div>
   </div>
 </template>
 
   
 <script>
+import OrderService from '../services/OrderService';
+
 export default {
   data() {
     return {
@@ -42,74 +65,62 @@ export default {
 
       this.cartItems.splice(index, 1);
       localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
-    },
-    updateQuantity(index, action) {
-      let cartItem = this.cartItems[index];
-
-      if (action === 'increase') {
-        cartItem.quantity++;
-      } else if (action === 'decrease') {
-        if (cartItem.quantity > 1) {
-          cartItem.quantity--;
-        }
-      }
       this.updateTotal()
-      localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
     },
+    increaseQuantity(index) {
+      this.cartItems[index].quantity++;
+      localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
+      this.updateTotal()
+    },
+    decreaseQuantity(index) {
+      if (this.cartItems[index].quantity > 1) {
+        this.cartItems[index].quantity--;
+        localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
+        this.updateTotal()
+      }
+    },
+    // updateQuantity() {
+    //   this.updateTotal()
+    //   localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
+    // },
     updateTotal() {
-      this.cartItems = JSON.parse(localStorage.getItem('cartItems'));
-
       this.totalPrice = this.cartItems.reduce((total, cartItem) => total + cartItem.item.price * cartItem.quantity, 0).toFixed(2);
     },
+    checkout() {
+      let orderDetails = [];
+      this.cartItems.forEach(item => {
+        let orderDetail = {
+          menuID: item.item.id,
+          quantity: item.quantity,
+          ordersID: null,
+          price: item.item.price
+        }
+        
+        orderDetails.push(orderDetail);
+      });
+      let orders = {
+        studentID: localStorage.getItem('id'),
+        diningHallID: localStorage.getItem('diningHall'),
+        totalAmount: this.totalPrice,
+        ordersStatus: 'in preperation',
+        orderDetails: orderDetails
+      }
+
+      OrderService.placeOrder(orders).then((response) => {
+        console.log('placed' + response);  
+      })
+    }
   },
   created() {
     this.getCartItems();
+    this.updateTotal()
   }
 };
 </script>
   
 <style scoped>
-/* Add custom styling here if needed */
-
-.cart-item {
-  list-style: none;
-  margin-bottom: 20px;
-}
-
-.card {
-  width: 300px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.card-body {
-  padding: 15px;
-}
-
-.card-title {
-  font-size: 1.25rem;
-  font-weight: bold;
-}
-
-.card-text {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.item-price {
-  font-size: 1.1rem;
-  font-weight: bold;
-}
-
-.quantity-controls {
-  display: flex;
-  align-items: center;
-}
-
-.quantity {
-  margin: 0 8px;
+.custom-input {
+  max-width: 70px;
 }
 </style>
 

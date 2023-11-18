@@ -39,7 +39,10 @@
             </ul>
           </div>
           <div>
-            <button class="btn btn-primary" v-if="$store.state.userName" v-on:click="logout()">Log Out</button>
+            <button class="btn btn-primary"  v-if="$store.state.userName" v-on:click="logout()">Log Out</button>
+            <button class="btn btn-primary" v-if="$store.state.designation === 'student'">
+              <router-link to="/cart"  class="nav-link">Cart</router-link>
+            </button>
           </div>
         </div>
       </div>
@@ -58,9 +61,6 @@ export default {
 };
 </script>
 <style scoped>
-.bg-gold {
-  background-color: gold !important;
-}
 
 /* Adjust the max-height and max-width as needed to fit your design */
 .navbar-brand-logo {

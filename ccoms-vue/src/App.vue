@@ -28,4 +28,7 @@ export default {
   color: #000000;
   margin-top: 60px;
 }
+.bg-gold {
+  background-color: gold !important;
+}
 </style>

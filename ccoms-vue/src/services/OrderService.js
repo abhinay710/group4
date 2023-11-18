@@ -8,8 +8,8 @@ class OrderService {
     }
 
     updateOrderStatus(id, orderStatus) {
-       return axios.post(ORDER_API + 'update-status/' + id + '/' + orderStatus,{}); 
+        return axios.post(ORDER_API + 'update-status/' + id + '/' + orderStatus,{}); 
     }
 }
-
+ 
 export default new OrderService()

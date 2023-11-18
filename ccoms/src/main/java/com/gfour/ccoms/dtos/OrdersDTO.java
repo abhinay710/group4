@@ -1,6 +1,7 @@
 package com.gfour.ccoms.dtos;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -15,4 +16,5 @@ public class OrdersDTO {
     private String createdBy;
     private Date createdOn;
     private String updatedBy;
+    private List<OrdersDetailsDTO> ordersDetails;
 }

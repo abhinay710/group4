@@ -15,14 +15,20 @@ import jakarta.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 @Data
 @Entity
 @Table(name = "Menu")
+@RequiredArgsConstructor
+@NoArgsConstructor
 public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
+    @NonNull
     private int id;
 
     @Column(name = "ItemName")

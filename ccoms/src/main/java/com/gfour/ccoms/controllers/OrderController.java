@@ -37,4 +37,10 @@ public class OrderController {
     public void updateOrderStatus(@PathVariable Integer id, @PathVariable String status) {
         orderService.updateOrderStatus(id, status);
     }
+
+
+    @PostMapping("place-order")
+    public void updateOrderStatus(@RequestBody OrdersDTO orderDTO) {
+        orderService.placeOrder(orderDTO);
+    }
 }
