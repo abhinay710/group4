@@ -17,12 +17,10 @@
             </div>
 
             <fieldset class="mb-3">
-
               <div class="form-check">
                 <div class="row">
                   <div class="col-auto">
-                    <input class="form-check-input" type="radio" name="gridRadios" id="student" v-model="designation"
-                      value="student" checked>
+                    <input class="form-check-input" type="radio" name="gridRadios" id="student" v-model="designation" value="student" checked>
                   </div>
                   <div class="col-auto">
                     <label class="form-check-label text-dark" for="student">Student</label>
@@ -32,8 +30,7 @@
               <div class="form-check">
                 <div class="row">
                   <div class="col-auto">
-                    <input class="form-check-input" type="radio" name="gridRadios" id="employee" v-model="designation"
-                      value="employee">
+                    <input class="form-check-input" type="radio" name="gridRadios" id="employee" v-model="designation" value="employee">
                   </div>
                   <div class="col-auto">
                     <label class="form-check-label text-dark" for="employee">Employee</label>
@@ -42,7 +39,12 @@
               </div>
             </fieldset>
 
-            <button type="submit" class="btn btn-primary" v-on:click="submitLogin()">Sign in</button>
+            <!-- Display error message -->
+            <div v-if="loginError" class="alert alert-danger" role="alert">
+              {{ loginError }}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Sign in</button>
           </form>
         </div>
       </div>
@@ -52,40 +54,48 @@
 
 <script>
 import LoginService from '../services/LoginService';
+
 export default {
   data() {
     return {
       username: '',
       password: '',
-      designation: ''
+      designation: 'student',
+      loginError: null, // New property for login error message
     };
   },
   methods: {
     submitLogin() {
-      const credentials = {
+      // Reset login error message
+      this.loginError = null;
+
+      LoginService.login({
         userName: this.username,
         password: this.password,
         designation: this.designation,
-      };
+      })
+      .then(response => {
+        this.$store.commit('login', { userName: response.data.userName, designation: response.data.designation });
+        const route = response.data.designation === 'student' ? '/menu-items' : '/orders';
+        this.$router.push(route).catch(() => {});
+      })
+      .catch(error => {
+        console.error('Error during login:', error);
 
-      LoginService.login(credentials)
-        .then(response => {
-          this.$store.commit('login', {userName:response.data.userName, designation: response.data.designation});
-          if (response.data.designation === 'student') {
-            this.$router.push("/menu-items").catch(() => { });
-          } else {
-            this.$router.push("/orders").catch(() => { });
-          }
-        })
-        .catch(error => {
-          console.error('Error during login:', error);
-        });
+        // Display login error message
+        if (error.response && error.response.status === 401) {
+          this.loginError = 'Wrong username or password';
+        } else {
+          this.loginError = 'Wrong username or password';
+
+        }
+      });
     },
   },
 };
 </script>
 
-<style >
+<style>
 body {
   background-color: maroon;
   margin: 0;

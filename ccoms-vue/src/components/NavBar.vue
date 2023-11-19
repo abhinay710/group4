@@ -40,9 +40,9 @@
           </div>
           <div>
             <button class="btn btn-primary"  v-if="$store.state.userName" v-on:click="logout()">Log Out</button>
-            <button class="btn btn-primary" v-if="$store.state.designation === 'student'">
+            <!-- <button class="btn btn-primary" v-if="$store.state.designation === 'student'">
               <router-link to="/cart"  class="nav-link">Cart</router-link>
-            </button>
+            </button> -->
           </div>
         </div>
       </div>
@@ -67,4 +67,9 @@ export default {
   max-height: 40px;
   max-width: 100%;
 }
+.btn btn-primary {
+    background-color: maroon;
+    color: #fff;
+    border: none;
+  }
 </style>
