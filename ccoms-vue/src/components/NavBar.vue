@@ -17,7 +17,7 @@
                 <router-link to="/menu-items" v-if="$store.state.userName" class="nav-link text-dark">Menu</router-link>
               </li>
               <!-- Orders option in navbar -->
-              <li class="nav-item" v-if="$store.state.userName && $store.state.designation === 'manager'">
+              <li class="nav-item" v-if="$store.state.userName">
                 <router-link to="/orders" class="nav-link text-dark">Orders</router-link>
               </li>
               <!-- Orders dropdown with additional reports based on designation -->

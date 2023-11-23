@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class StudentDTO {
-    private int id;
+    private Integer id;
     private String firstName;
     private String lastName;
     private String globalID;

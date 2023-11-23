@@ -20,13 +20,18 @@
                     <td>{{ order.ordersStatus.replaceAll("'", "") }}</td>
                     <td>{{ order.totalAmount }}</td>
                     <td>{{ order.createdOn }}</td>
-                    <td>
+                    <td v-if="$store.state.designation !== 'student'">
                         <button class="btn btn-primary" v-if="order.ordersStatus === 'in preperation'"
                             @click="updateOrderStatus(order, 'packing')">Pack Order</button>
                         <button class="btn btn-primary" v-else-if="order.ordersStatus === 'packing'"
                             @click="updateOrderStatus(order, 'ready to pick up')">Ready to Pickup</button>
                         <button class="btn btn-primary" v-else-if="order.ordersStatus === 'ready to pick up'"
                             @click="updateOrderStatus(order, 'delivered')">Delivered</button>
+                    </td>
+                    <td v-if="$store.state.designation === 'student'">
+                        <button class="btn btn-primary" @click="openModal(order)">
+                            Order Details
+                        </button>
                     </td>
                 </tr>
             </tbody>
@@ -45,18 +50,58 @@
                 </li>
             </ul>
         </nav>
+
+        <div v-if="orderDetails" class="modal fade" id="orderDetails" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="orderDetailsLabel">Order Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="closeModal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(detail, detailIndex) in orderDetails" :key="detailIndex">
+                                    <td>{{ detail.menu.itemName }}</td>
+                                    <td>{{ detail.quantity }}</td>
+                                    <td>{{ detail.price }}</td>
+                                    <td>{{ or }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            @click="closeModal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>  
 
 <script>
 import OrderService from '../services/OrderService';
 
+/* eslint-disable */
 export default {
     data() {
         return {
             orders: [],
             pageSize: 8,
             currentPage: 1,
+            orderDetails: null
         };
     },
     computed: {
@@ -72,8 +117,13 @@ export default {
     methods: {
         async getOrders(forceRefresh) {
             try {
-                const response = await OrderService.getOrders({ forceRefresh });
-                this.orders = response.data;
+                if (localStorage.getItem('designation') === 'student') {
+                    const response = await OrderService.getOrdersByStudentId(localStorage.getItem('id'));
+                    this.orders = response.data;
+                } else {
+                    const response = await OrderService.getOrders({ forceRefresh });
+                    this.orders = response.data;
+                }
             } catch (error) {
                 console.error('Error fetching orders:', error);
                 // Handle the error, e.g., show a user-friendly message
@@ -106,7 +156,14 @@ export default {
             } finally {
                 order.loading = false; // Set loading state to false after update completes or fails
             }
-
+        },
+        openModal(order) {
+            this.orderDetails = order.ordersDetails
+            $('#orderDetails').modal('show');
+        },
+        closeModal() {
+            this.orderDetails = null;
+            $('#orderDetails').modal('hide');
         },
     },
     mounted() {
@@ -177,4 +234,5 @@ h2 {
     z-index: 2;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-}</style>
+}
+</style>

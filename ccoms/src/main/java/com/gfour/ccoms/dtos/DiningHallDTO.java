@@ -1,12 +1,15 @@
 package com.gfour.ccoms.dtos;
 
 import java.util.Date;
+import java.util.List;
+
+import com.gfour.ccoms.entities.Orders;
 
 import lombok.Data;
 
 @Data
 public class DiningHallDTO {
-    private int id;
+    private Integer id;
     private String diningHallName;
     private String timings;
     private String aptNo;
@@ -18,4 +21,7 @@ public class DiningHallDTO {
     private String createdBy;
     private Date updatedOn;
     private String updatedBy;
+    private List<MenuDTO> menuItems;
+    private List<OrdersDTO> orders;
+
 }

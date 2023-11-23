@@ -15,21 +15,15 @@ import jakarta.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 @Data
 @Entity
 @Table(name = "Menu")
-@RequiredArgsConstructor
-@NoArgsConstructor
 public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    @NonNull
-    private int id;
+    private Integer id;
 
     @Column(name = "ItemName")
     private String itemName;
@@ -44,22 +38,22 @@ public class Menu {
     private String portion;
 
     @Column(name = "Calories")
-    private int calories;
+    private Integer calories;
 
     @Column(name = "Ingredients")
     private String ingredients;
 
     @Column(name = "isVegan")
-    private char isVegan;
+    private Character isVegan;
 
     @Column(name = "containsGluten")
-    private char containsGluten;
+    private Character containsGluten;
 
     @Column(name = "containsDairy")
-    private char containsDairy;
+    private Character containsDairy;
 
     @Column(name = "containsNuts")
-    private char containsNuts;
+    private Character containsNuts;
 
     @Column(name = "Protein")
     private BigDecimal protein;

@@ -6,17 +6,17 @@ import lombok.Data;
 
 @Data
 public class MenuDTO {
-    private int id;
+    private Integer id;
     private String itemName;
     private Double price;
     private String diningStation;
     private String portion;
-    private int calories;
+    private Integer calories;
     private String ingredients;
-    private char isVegan;
-    private char containsGluten;
-    private char containsDairy;
-    private char containsNuts;
+    private Character isVegan;
+    private Character containsGluten;
+    private Character containsDairy;
+    private Character containsNuts;
     private Double protein;
     private Double totalCarbohydrates;
     private Double cholesterol;
@@ -25,7 +25,7 @@ public class MenuDTO {
     private Double potassium;
     private Double iron;
     private Double calcium;
-    private int diningHallID;
+    private Integer diningHallID;
     private String createdBy;
     private Date createdOn;
     private String updatedBy;

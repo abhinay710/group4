@@ -6,10 +6,10 @@ import lombok.Data;
 
 @Data
 public class EmployeeDTO {
-    private int id;
+    private Integer id;
     private String firstName;
     private String lastName;
-    private int diningHallID;
+    private Integer diningHallID;
     private String diningStation;
     private String role;
     private String emailID;

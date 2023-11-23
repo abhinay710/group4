@@ -75,7 +75,7 @@ export default {
         designation: this.designation,
       })
       .then(response => {
-        this.$store.commit('login', { userName: response.data.userName, designation: response.data.designation });
+        this.$store.commit('login', response.data);
         const route = response.data.designation === 'student' ? '/menu-items' : '/orders';
         this.$router.push(route).catch(() => {});
       })

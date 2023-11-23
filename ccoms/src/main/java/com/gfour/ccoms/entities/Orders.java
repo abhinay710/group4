@@ -16,23 +16,17 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "Orders")
-@RequiredArgsConstructor
-@NoArgsConstructor
 public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    @NonNull
-    private int id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "StudentID")
@@ -62,6 +56,6 @@ public class Orders {
     private String updatedBy;
 
     @OneToMany(mappedBy = "orders", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<OrdersDetails> orderDetails;
+    private List<OrdersDetails> ordersDetails;
 
 }

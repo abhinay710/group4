@@ -8,22 +8,16 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "OrdersDetails")
-@RequiredArgsConstructor
-@NoArgsConstructor
 public class OrdersDetails {
     @Id
     @ManyToOne
     @JoinColumn(name = "OrdersID")
-    @NonNull
     private Orders orders;
 
     @Id
@@ -32,7 +26,7 @@ public class OrdersDetails {
     private Menu menu;
 
     @Column(name = "Quantity")
-    private int quantity;
+    private Integer quantity;
 
     @Column(name = "Price")
     private Double price;

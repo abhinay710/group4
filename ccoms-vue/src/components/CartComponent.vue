@@ -41,7 +41,7 @@
         </tbody>
       </table>
 
-      <button class="btn bg-gold mt-3 text-dark" @click="checkout" >Checkout</button>
+      <button class="btn bg-gold mt-3 text-dark" @click="checkout" >Order Now</button>
     </div>
   </div>
 </template>
@@ -100,14 +100,18 @@ export default {
       });
       let orders = {
         studentID: localStorage.getItem('id'),
-        diningHallID: localStorage.getItem('diningHall'),
+        diningHallID: 1,
+        employeeID: null,
         totalAmount: this.totalPrice,
         ordersStatus: 'in preperation',
-        orderDetails: orderDetails
+        ordersDetails: orderDetails
       }
 
       OrderService.placeOrder(orders).then((response) => {
         console.log('placed' + response);  
+        localStorage.setItem('cartItems', JSON.stringify([]));
+        this.$router.push("/orders").catch(() => { });
+
       })
     }
   },

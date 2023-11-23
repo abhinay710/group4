@@ -36,13 +36,13 @@ export default new Vuex.Store({
       state.userName = loginDetails.userName;
       state.designation = loginDetails.designation;
       localStorage.setItem('userName', loginDetails.userName);
+      localStorage.setItem('id', loginDetails.userId)
       localStorage.setItem('designation', loginDetails.designation);
     },
     logout(state) {
       state.userName = "";
       state.designation = "";
-      localStorage.removeItem('userName');
-      localStorage.removeItem('designation');
+      localStorage.clear();
     },
     initialiseStore(state) {
       if (localStorage.getItem('userName')) {

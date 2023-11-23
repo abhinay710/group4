@@ -25,7 +25,8 @@
     </div>
 
     <!-- Nutritional Info Modal -->
-    <div v-if="nutritionalInfoDetails" class="modal fade" id="nutritionalInfoModal" tabindex="-1" role="dialog" aria-labelledby="nutritionalInfoModalLabel" aria-hidden="true">
+    <div v-if="nutritionalInfoDetails" class="modal fade" id="nutritionalInfoModal" tabindex="-1" role="dialog"
+      aria-labelledby="nutritionalInfoModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -35,25 +36,25 @@
             </button>
           </div>
           <div class="modal-body">
-  <!-- Display nutritional information details here -->
-  <p><strong>Item Name:</strong> {{ nutritionalInfoDetails.itemName }}</p>
-  <p><strong>Portion:</strong> {{ nutritionalInfoDetails.portion }}</p>
-  <p><strong>Calories:</strong> {{ nutritionalInfoDetails.calories }}</p>
-  <p><strong>Ingredients:</strong> {{ nutritionalInfoDetails.ingredients }}</p>
-  <p><strong>Is Vegan:</strong> {{ nutritionalInfoDetails.isVegan }}</p>
-  <p><strong>Contains Gluten:</strong> {{ nutritionalInfoDetails.containsGluten }}</p>
-  <p><strong>Contains Dairy:</strong> {{ nutritionalInfoDetails.containsDairy }}</p>
-  <p><strong>Contains Nuts:</strong> {{ nutritionalInfoDetails.containsNuts }}</p>
-  <p><strong>Protein:</strong> {{ nutritionalInfoDetails.protein }}</p>
-  <p><strong>Total Carbohydrates:</strong> {{ nutritionalInfoDetails.totalCarbohydrates }}</p>
-  <p><strong>Cholesterol:</strong> {{ nutritionalInfoDetails.cholesterol }}</p>
-  <p><strong>Total Fat:</strong> {{ nutritionalInfoDetails.totalFat }}</p>
-  <p><strong>Sodium:</strong> {{ nutritionalInfoDetails.sodium }}</p>
-  <p><strong>Potassium:</strong> {{ nutritionalInfoDetails.potassium }}</p>
-  <p><strong>Iron:</strong> {{ nutritionalInfoDetails.iron }}</p>
-  <p><strong>Calcium:</strong> {{ nutritionalInfoDetails.calcium }}</p>
- 
-</div>
+            <!-- Display nutritional information details here -->
+            <p><strong>Item Name:</strong> {{ nutritionalInfoDetails.itemName }}</p>
+            <p><strong>Portion:</strong> {{ nutritionalInfoDetails.portion }}</p>
+            <p><strong>Calories:</strong> {{ nutritionalInfoDetails.calories }}</p>
+            <p><strong>Ingredients:</strong> {{ nutritionalInfoDetails.ingredients }}</p>
+            <p><strong>Is Vegan:</strong> {{ nutritionalInfoDetails.isVegan }}</p>
+            <p><strong>Contains Gluten:</strong> {{ nutritionalInfoDetails.containsGluten }}</p>
+            <p><strong>Contains Dairy:</strong> {{ nutritionalInfoDetails.containsDairy }}</p>
+            <p><strong>Contains Nuts:</strong> {{ nutritionalInfoDetails.containsNuts }}</p>
+            <p><strong>Protein:</strong> {{ nutritionalInfoDetails.protein }}</p>
+            <p><strong>Total Carbohydrates:</strong> {{ nutritionalInfoDetails.totalCarbohydrates }}</p>
+            <p><strong>Cholesterol:</strong> {{ nutritionalInfoDetails.cholesterol }}</p>
+            <p><strong>Total Fat:</strong> {{ nutritionalInfoDetails.totalFat }}</p>
+            <p><strong>Sodium:</strong> {{ nutritionalInfoDetails.sodium }}</p>
+            <p><strong>Potassium:</strong> {{ nutritionalInfoDetails.potassium }}</p>
+            <p><strong>Iron:</strong> {{ nutritionalInfoDetails.iron }}</p>
+            <p><strong>Calcium:</strong> {{ nutritionalInfoDetails.calcium }}</p>
+
+          </div>
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="closeModal">Close</button>
@@ -105,30 +106,30 @@ export default {
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
     },
     openModal(menuItem) {
-  // Set up the nutritional information details based on menuItem
-  this.nutritionalInfoDetails = {
-    itemName: menuItem.itemName || 'N/A',
-    portion: menuItem.portion || 'N/A',
-    calories: menuItem.calories || 'N/A',
-    ingredients: menuItem.ingredients || 'N/A',
-    isVegan: menuItem.isVegan || 'N/A',
-    containsGluten: menuItem.containsGluten || 'N/A',
-    containsDairy: menuItem.containsDairy || 'N/A',
-    containsNuts: menuItem.containsNuts || 'N/A',
-    protein: menuItem.protein || 'N/A',
-    totalCarbohydrates: menuItem.totalCarbohydrates || 'N/A',
-    cholesterol: menuItem.cholesterol || 'N/A',
-    totalFat: menuItem.totalFat || 'N/A',
-    sodium: menuItem.sodium || 'N/A',
-    potassium: menuItem.potassium || 'N/A',
-    iron: menuItem.iron || 'N/A',
-    calcium: menuItem.calcium || 'N/A',
-    // Add more details as needed
-  };
+      // Set up the nutritional information details based on menuItem
+      this.nutritionalInfoDetails = {
+        itemName: menuItem.itemName || 'N/A',
+        portion: menuItem.portion || 'N/A',
+        calories: menuItem.calories || 'N/A',
+        ingredients: menuItem.ingredients || 'N/A',
+        isVegan: menuItem.isVegan || 'N/A',
+        containsGluten: menuItem.containsGluten || 'N/A',
+        containsDairy: menuItem.containsDairy || 'N/A',
+        containsNuts: menuItem.containsNuts || 'N/A',
+        protein: menuItem.protein || 'N/A',
+        totalCarbohydrates: menuItem.totalCarbohydrates || 'N/A',
+        cholesterol: menuItem.cholesterol || 'N/A',
+        totalFat: menuItem.totalFat || 'N/A',
+        sodium: menuItem.sodium || 'N/A',
+        potassium: menuItem.potassium || 'N/A',
+        iron: menuItem.iron || 'N/A',
+        calcium: menuItem.calcium || 'N/A',
+        // Add more details as needed
+      };
 
-  // Open the modal using jQuery
-  $('#nutritionalInfoModal').modal('show');
-},
+      // Open the modal using jQuery
+      $('#nutritionalInfoModal').modal('show');
+    },
     closeModal() {
       // Reset the nutritional information details and close the modal
       this.nutritionalInfoDetails = null;
@@ -142,7 +143,6 @@ export default {
 /* eslint-enable */
 </script>
 <style>
-
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
@@ -165,7 +165,7 @@ export default {
   background-color: #f7f7f7;
 }
 
-.btn{
+.btn {
   background-color: maroon;
   color: #fff;
   border: none;

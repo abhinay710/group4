@@ -7,8 +7,16 @@ class OrderService {
         return axios.get(ORDER_API + 'all');
     }
 
+    getOrdersByStudentId(id) {
+        return axios.get(ORDER_API + 'student/' + id);
+    }
+
     updateOrderStatus(id, orderStatus) {
         return axios.post(ORDER_API + 'update-status/' + id + '/' + orderStatus,{}); 
+    }
+
+    placeOrder(order) {
+        return axios.post(ORDER_API + 'place-order', order);
     }
 }
  

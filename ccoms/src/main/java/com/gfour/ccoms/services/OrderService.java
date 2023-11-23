@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 
 import com.gfour.ccoms.entities.OrdersDetails;
 import com.gfour.ccoms.entities.Student;
+import com.gfour.ccoms.mapper.OrdersMapper;
 import com.gfour.ccoms.repositories.OrdersRepo;
+import com.gfour.ccoms.repositories.StudentRepo;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,6 +28,8 @@ import jakarta.transaction.Transactional;
 public class OrderService {
     @Autowired
     private OrdersRepo ordersRepo;
+    @Autowired
+    private StudentRepo studentRepo;
     @Autowired
     private ModelMapper modelMapper;
     
@@ -41,39 +45,30 @@ public class OrderService {
 
     @Transactional
     public void placeOrder(OrdersDTO ordersDTO) {
-        Orders order = convertToOrdersEntity(ordersDTO);
+        Optional<Student> student = studentRepo.findById(ordersDTO.getStudentID());
+        Orders order = OrdersMapper.INSTANCE.ordersDTOToOrders(ordersDTO);
+        order.setCreatedBy(student.get().getFirstName() + " " + student.get().getLastName());
+        order.setEmployee(null);
         order.setCreatedOn(new Date());
-        List<OrdersDetails> ordersDetails = convertToOrderDetailsEntity(ordersDTO.getOrdersDetails());
-        ordersDetails.forEach(ordersDetail -> {
-            ordersDetail.setOrders(order);
-        });
-        order.setOrderDetails(ordersDetails);
 
         ordersRepo.save(order);
     }
 
-    private Orders convertToOrdersEntity(OrdersDTO ordersDTO) {
-        Orders order = new Orders();
-        order.setStudent(new Student(ordersDTO.getStudentID()));
-        order.setEmployee(new Employee(ordersDTO.getEmployeeID()));
-        order.setDiningHall(new DiningHall(ordersDTO.getDiningHallID()));
-        order.setTotalAmount(ordersDTO.getTotalAmount());
-        order.setOrdersStatus(ordersDTO.getOrdersStatus());
-        order.setCreatedBy(ordersDTO.getCreatedBy());
-        order.setUpdatedBy(ordersDTO.getUpdatedBy());
-        return order;
-    }
 
-    private List<OrdersDetails> convertToOrderDetailsEntity(List<OrdersDetailsDTO>  ordersDetailsDTOList) {
-        List<OrdersDetails> ordersDetailsList = new ArrayList<>();
-        ordersDetailsDTOList.forEach(ordersDetailsDTO -> {
-            OrdersDetails ordersDetails = new OrdersDetails();
-            ordersDetails.setMenu(new Menu(ordersDetailsDTO.getMenuID()));
-            ordersDetails.setPrice(ordersDetailsDTO.getPrice());
-            ordersDetails.setQuantity(ordersDetailsDTO.getQuantity());
-            ordersDetailsList.add(ordersDetails);
+    public List<OrdersDTO> findByStudentId(Integer studentId) {
+        Student student = new Student();
+        student.setId(studentId);
+        Iterable<Orders> ordersIterable = ordersRepo.findByStudent(student);
+        List<OrdersDTO> ordersList = new ArrayList<>();
+
+        ordersIterable.forEach(order -> {
+            ordersList.add(OrdersMapper.INSTANCE.ordersToOrdersDTO(order));
         });
 
-        return ordersDetailsList;
+        ordersList.sort((o1, o2) -> {
+            return o2.getId().compareTo(o1.getId());
+        });
+
+        return ordersList;
     }
 }

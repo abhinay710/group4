@@ -14,21 +14,15 @@ import jakarta.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 @Data
 @Entity
 @Table(name = "DiningHall")
-@RequiredArgsConstructor
-@NoArgsConstructor
 public class DiningHall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    @NonNull
-    private int id;
+    private Integer id;
 
     @Column(name = "DiningHallName")
     private String diningHallName;

@@ -3,6 +3,8 @@ package com.gfour.ccoms.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gfour.ccoms.entities.Student;
+import com.gfour.ccoms.mapper.OrdersMapper;
 import com.gfour.ccoms.services.OrderService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +24,24 @@ public class OrderController {
     private ModelMapper modelMapper;
     @Autowired
     private OrderService orderService;
+
     @GetMapping("/all")
     public List<OrdersDTO> getAll() {
-        Iterable<Orders>  menuItems = ordersRepo.findAll();
-        List<OrdersDTO> ordersList = new ArrayList<>();
-        menuItems.forEach(item -> {
-            ordersList.add(modelMapper.map(item, OrdersDTO.class));
+        Iterable<Orders>  ordersList = ordersRepo.findAll();
+        List<OrdersDTO> ordersDTOList = new ArrayList<>();
+        ordersList.forEach(item -> {
+            ordersDTOList.add(modelMapper.map(item, OrdersDTO.class));
+        });
+        ordersDTOList.sort((o1, o2) -> {
+            return o2.getId().compareTo(o1.getId());
         });
 
-        return ordersList;
+        return ordersDTOList;
+    }
+
+    @GetMapping("/student/{id}")
+    public List<OrdersDTO> getByStudentId(@PathVariable Integer id) {
+        return orderService.findByStudentId(id);
     }
 
     @PostMapping("update-status/{id}/{status}")

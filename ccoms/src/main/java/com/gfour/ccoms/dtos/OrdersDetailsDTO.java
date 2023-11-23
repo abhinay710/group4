@@ -4,8 +4,9 @@ import lombok.Data;
 
 @Data
 public class OrdersDetailsDTO {
-    private int ordersID;
-    private int menuID;
-    private int quantity;
+    private Integer ordersID;
+    private Integer menuID;
+    private MenuDTO menu;
+    private Integer quantity;
     private Double price;
 }

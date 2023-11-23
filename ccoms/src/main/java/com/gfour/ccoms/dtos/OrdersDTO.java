@@ -7,10 +7,10 @@ import lombok.Data;
 
 @Data
 public class OrdersDTO {
-    private int id;
-    private int studentID;
-    private int employeeID;
-    private int diningHallID;
+    private Integer id;
+    private Integer studentID;
+    private Integer employeeID;
+    private Integer diningHallID;
     private Double totalAmount;
     private String ordersStatus;
     private String createdBy;
