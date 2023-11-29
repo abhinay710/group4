@@ -11,7 +11,6 @@ import com.gfour.ccoms.dtos.MenuDTO;
 import com.gfour.ccoms.dtos.OrdersDTO;
 import com.gfour.ccoms.dtos.OrdersDetailsDTO;
 import com.gfour.ccoms.entities.DiningHall;
-import com.gfour.ccoms.entities.Employee;
 import com.gfour.ccoms.entities.Menu;
 import com.gfour.ccoms.entities.Orders;
 import com.gfour.ccoms.entities.OrdersDetails;
@@ -35,16 +34,9 @@ public interface OrdersMapper {
     @Mapping(source = "orders.id", target = "ordersID")
     OrdersDetailsDTO ordersDetailsToOrdersDetailsDTO(OrdersDetails ordersDetails);
 
-    @Mapping(source = "diningHall.id", target ="diningHallID")
-    MenuDTO menuToMenuDTO(Menu menu);
-
     List<OrdersDetailsDTO> ordersDetailsListToOrdersDetailsDTOList(List<OrdersDetails> ordersDetailsList);
 
     @Mapping(source = "ordersDetailsDTO.ordersID", target = "orders.id")
     @Mapping(source = "ordersDetailsDTO.menuID", target = "menu.id")
     OrdersDetails ordersDetailsDTOToOrdersDetails(OrdersDetailsDTO ordersDetailsDTO);
-
-    @Mapping(source = "menuItems", target = "menuItems", ignore = true)
-    @Mapping(source = "orders", target = "orders", ignore = true)
-    DiningHallDTO diningHallToDiningHallDTO(DiningHall diningHall);
 }

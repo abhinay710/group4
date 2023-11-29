@@ -45,15 +45,24 @@ public class OrderService {
 
     @Transactional
     public void placeOrder(OrdersDTO ordersDTO) {
-        Optional<Student> student = studentRepo.findById(ordersDTO.getStudentID());
+        Student student = studentRepo.findById(ordersDTO.getStudentID()).get();
         Orders order = OrdersMapper.INSTANCE.ordersDTOToOrders(ordersDTO);
-        order.setCreatedBy(student.get().getFirstName() + " " + student.get().getLastName());
+        order.setCreatedBy(student.getFirstName() + " " + student.getLastName());
         order.setEmployee(null);
         order.setCreatedOn(new Date());
+
         order.getOrdersDetails().forEach(ordersDetails -> {
             ordersDetails.setOrders(order);
         });
-        ordersRepo.save(order);
+
+        if (student.getFlexAmountBalance() >= order.getTotalAmount()) {
+            student.setFlexAmountBalance(student.getFlexAmountBalance() - order.getTotalAmount());
+
+            ordersRepo.save(order);
+            studentRepo.save(student);
+        } else {
+            throw new RuntimeException("insufficient balance");
+        }
     }
 
 
@@ -73,5 +82,4 @@ public class OrderService {
 
         return ordersList;
     }
-    
 }

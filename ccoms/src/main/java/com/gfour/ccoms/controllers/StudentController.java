@@ -1,4 +1,5 @@
 package com.gfour.ccoms.controllers;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +33,15 @@ public class StudentController {
 
         return ordersList;
     }
-    
+
     @GetMapping("/{id}")
     public StudentDTO getByStudentId(@PathVariable Integer id) {
         return studentService.findByStudentId(id);
 }
+
+    @PostMapping("/save")
+    public StudentDTO saveStudent(@RequestBody StudentDTO studentDTO) {
+        return studentService.save(studentDTO);
+    }
+
 }

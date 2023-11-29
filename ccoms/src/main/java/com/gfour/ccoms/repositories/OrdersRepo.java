@@ -6,7 +6,5 @@ import com.gfour.ccoms.entities.Orders;
 import com.gfour.ccoms.entities.Student;
 
 public interface OrdersRepo extends CrudRepository<Orders, Integer> {
-    Orders findTopByOrderByIdDesc();
-
     Iterable<Orders> findByStudent(Student studnet);
 }

@@ -1,8 +1,12 @@
 package com.gfour.ccoms.repositories;
 
-import org.springframework.data.repository.CrudRepository;
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.gfour.ccoms.entities.Menu;
 
-public interface MenuRepo extends CrudRepository<Menu, Integer> {
+public interface MenuRepo extends JpaRepository<Menu, Integer> {
+    List<Menu> findByDiningHallId(Integer diningHallId);
+
 }

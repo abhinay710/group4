@@ -7,12 +7,8 @@ class EmployeeService {
     return axios.get(EMPLOYEE_API + 'all');
   }
 
-  addEmployee(employee) {
-    return axios.post(EMPLOYEE_API + 'add', employee);
-  }
-
-  updateEmployee(id, employee) {
-    return axios.put(EMPLOYEE_API + 'update/' + id, employee);
+  saveEmployee(employee) {
+    return axios.post(EMPLOYEE_API + 'save', employee);
   }
 }
 

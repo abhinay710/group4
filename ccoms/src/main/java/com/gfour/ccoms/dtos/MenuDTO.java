@@ -2,6 +2,8 @@ package com.gfour.ccoms.dtos;
 
 import java.util.Date;
 
+import com.gfour.ccoms.entities.DiningHall;
+
 import lombok.Data;
 
 @Data
@@ -25,7 +27,7 @@ public class MenuDTO {
     private Double potassium;
     private Double iron;
     private Double calcium;
-    private Integer diningHallID;
+    private DiningHallDTO diningHall;
     private String createdBy;
     private Date createdOn;
     private String updatedBy;

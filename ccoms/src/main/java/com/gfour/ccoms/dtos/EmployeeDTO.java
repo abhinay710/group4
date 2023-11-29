@@ -2,6 +2,8 @@ package com.gfour.ccoms.dtos;
 
 import java.util.Date;
 
+import com.gfour.ccoms.entities.DiningHall;
+
 import lombok.Data;
 
 @Data
@@ -9,7 +11,7 @@ public class EmployeeDTO {
     private Integer id;
     private String firstName;
     private String lastName;
-    private Integer diningHallID;
+    private DiningHallDTO diningHall;
     private String diningStation;
     private String role;
     private String emailID;

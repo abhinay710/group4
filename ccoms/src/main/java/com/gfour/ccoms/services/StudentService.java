@@ -37,5 +37,12 @@ public class StudentService {
 
         return modelMapper.map(student.get(), StudentDTO.class);
     }
+
+    public StudentDTO save(StudentDTO studentDTO) {
+        Student student = modelMapper.map(studentDTO, Student.class);
+        studentRepo.save(student);
+
+        return modelMapper.map(student, StudentDTO.class);
+    }
 }
 
