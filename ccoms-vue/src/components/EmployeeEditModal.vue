@@ -1,9 +1,12 @@
 <template>
-  <div class="modal fade" ref="employeeEditModal" tabindex="-1" role="dialog" aria-labelledby="employeeEditModalLabel" aria-hidden="true">
+  <div class="modal fade" ref="employeeEditModal" tabindex="-1" role="dialog" aria-labelledby="employeeEditModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="employeeEditModalLabel">Edit Employee</h5>
+          <h5 v-if="editedEmployee.id === undefined" class="modal-title" id="employeeEditModalLabel">Add Employee</h5>
+          <h5 v-if="editedEmployee.id !== undefined" class="modal-title" id="employeeEditModalLabel">Edit Employee</h5>
+
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="closeModal">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -11,9 +14,9 @@
         <div class="modal-body">
           <form @submit.prevent="saveChanges">
             <!-- Employee ID -->
-            <div class="form-group">
+            <div class="form-group" v-if="editedEmployee.id !== undefined">
               <label for="editEmployeeId">Employee ID:</label>
-              <input type="text" v-model="editedEmployee.id" class="form-control" id="editEmployeeId" readonly>
+              <input type="text" v-model="editedEmployee.id" class="form-control" id="editEmployeeId" disabled="true">
             </div>
 
             <!-- First Name -->
@@ -30,8 +33,10 @@
 
             <!-- Dining Hall ID -->
             <div class="form-group">
-              <label for="editDiningHallId">Dining Hall ID:</label>
-              <input type="text" v-model="editedEmployee.diningHallID" class="form-control" id="editDiningHallId">
+              <label for="editDiningHall">Dining Hall:</label>
+              <select v-model="editedEmployee.diningHall" class="form-control" id="editDiningHall">
+                <option v-for="hall in diningHalls" :key="hall.id" :value="hall">{{ hall.diningHallName }}</option>
+              </select>
             </div>
 
             <!-- Dining Station -->
@@ -43,7 +48,10 @@
             <!-- Role -->
             <div class="form-group">
               <label for="editRole">Role:</label>
-              <input type="text" v-model="editedEmployee.role" class="form-control" id="editRole">
+              <select v-model="editedEmployee.role" class="form-control" id="editRole">
+                <option>employee</option>
+                <option>manager</option>
+              </select>
             </div>
 
             <!-- Email ID -->
@@ -105,9 +113,12 @@ export default {
       editedEmployee: {},
     };
   },
+  props: ['diningHalls'],
   methods: {
     openModal(employee) {
-      this.editedEmployee = { ...employee };
+      if (employee) {
+        this.editedEmployee = { ...employee };
+      }
       $(this.$refs.employeeEditModal).modal('show');
     },
     closeModal() {
@@ -115,22 +126,16 @@ export default {
       $(this.$refs.employeeEditModal).modal('hide');
     },
     async saveChanges() {
-    try {
-      // Call the API to update the employee
-      await EmployeeService.addEmployee(this.editedEmployee);
+      try {
+        await EmployeeService.saveEmployee(this.editedEmployee);
 
-      // If the update is successful, close the modal
-      this.closeModal();
-    } catch (error) {
-      // Handle any errors that might occur during the update
-      console.error('Error updating employee:', error);
-      // Optionally, you can provide feedback to the user about the error
-    }
-  },
+        this.closeModal();
+      } catch (error) {
+        console.error('Error updating employee:', error);
+      }
+    },
   },
 };
 </script>
 
-<style scoped>
-/* Add your scoped styles here */
-</style>
+<style scoped></style>
