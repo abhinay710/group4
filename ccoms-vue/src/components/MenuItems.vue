@@ -5,7 +5,6 @@
       <label for="diningHallDropdown">Select Dining Hall:</label>
       <select v-model="selectedDiningHall" @change="filterMenuItemsByDiningHall" class="form-control"
         id="diningHallDropdown">
-        <option value="all">All Dining Halls</option>
         <option v-for="hall in diningHalls" :key="hall.id" :value="hall.id">{{ hall.diningHallName }}</option>
       </select>
     </div>
@@ -118,11 +117,9 @@ export default {
     },
     filterMenuItemsByDiningHall() {
       // Filter menu items based on the selected dining station
-      if (this.selectedDiningHall === 'all') {
-         this.filteredMenuItems = [...this.menuItems];
-      } else {
-        this.filteredMenuItems = this.menuItems.filter((item) => item.diningHall.id === this.selectedDiningHall);
-      }
+      
+      this.filteredMenuItems = this.menuItems.filter((item) => item.diningHall.id === this.selectedDiningHall);
+      localStorage.setItem('diningHallId', this.selectedDiningHall);
     
     },
     addToCart(item) {

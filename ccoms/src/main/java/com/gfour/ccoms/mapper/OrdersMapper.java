@@ -21,14 +21,15 @@ public interface OrdersMapper {
 
     @Mapping(source = "student.id", target = "studentID")
     @Mapping(source = "employee.id", target = "employeeID")
-    @Mapping(source = "diningHall.id", target = "diningHallID")
+    @Mapping(target = "diningHall.menuItems", ignore = true)
+    @Mapping(target = "diningHall.orders", ignore = true)
+    @Mapping(target = "diningHall.employees", ignore = true)
     OrdersDTO ordersToOrdersDTO(Orders orders);
 
     List<OrdersDTO> ordersListToOrdersDTOList(List<Orders> ordersList);
 
     @Mapping(source = "ordersDTO.studentID", target = "student.id")
     @Mapping(source = "ordersDTO.employeeID", target = "employee.id")
-    @Mapping(source = "ordersDTO.diningHallID", target = "diningHall.id")
     Orders ordersDTOToOrders(OrdersDTO ordersDTO);
 
     @Mapping(source = "orders.id", target = "ordersID")

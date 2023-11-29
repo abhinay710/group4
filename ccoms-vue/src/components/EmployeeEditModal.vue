@@ -49,8 +49,8 @@
             <div class="form-group">
               <label for="editRole">Role:</label>
               <select v-model="editedEmployee.role" class="form-control" id="editRole">
-                <option>employee</option>
-                <option>manager</option>
+                <option >employee</option>
+                <option >manager</option>
               </select>
             </div>
 

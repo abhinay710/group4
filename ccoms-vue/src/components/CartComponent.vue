@@ -100,7 +100,7 @@ export default {
       });
       let orders = {
         studentID: localStorage.getItem('id'),
-        diningHallID: 1,
+        diningHall: { id : localStorage.getItem('diningHallId')},
         employeeID: null,
         totalAmount: this.totalPrice,
         ordersStatus: 'in preperation',

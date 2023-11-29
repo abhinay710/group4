@@ -66,7 +66,6 @@ export default {
     };
   },
   methods: {
-    
     async getStudentData() {
       try {
         const response = await StudentService.getStudentById(localStorage.getItem('id'));
@@ -77,14 +76,13 @@ export default {
       }
     },
     async saveChanges() {
-      await StudentService.saveStudent(this.studentData);
-      // try {
-      //   await StudentService.updateStudent(localStorage.getItem('id'), this.studentData);
-      //   // Optionally, you can display a success message or redirect the user
-      // } catch (error) {
-      //   console.error('Error saving changes:', error);
-      //   // Handle the error, e.g., show a user-friendly message
-      // }
+      try {
+        await StudentService.saveStudent(this.studentData);
+        // Optionally, you can display a success message or redirect the user
+      } catch (error) {
+        console.error('Error saving changes:', error);
+        // Handle the error, e.g., show a user-friendly message
+      }
     },
   },
   mounted() {
