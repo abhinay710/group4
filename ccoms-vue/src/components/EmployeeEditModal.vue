@@ -117,7 +117,7 @@ export default {
     async saveChanges() {
     try {
       // Call the API to update the employee
-      await EmployeeService.updateEmployee(this.editedEmployee);
+      await EmployeeService.addEmployee(this.editedEmployee);
 
       // If the update is successful, close the modal
       this.closeModal();

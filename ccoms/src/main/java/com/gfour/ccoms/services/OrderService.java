@@ -50,7 +50,9 @@ public class OrderService {
         order.setCreatedBy(student.get().getFirstName() + " " + student.get().getLastName());
         order.setEmployee(null);
         order.setCreatedOn(new Date());
-
+        order.getOrdersDetails().forEach(ordersDetails -> {
+            ordersDetails.setOrders(order);
+        });
         ordersRepo.save(order);
     }
 
@@ -71,4 +73,5 @@ public class OrderService {
 
         return ordersList;
     }
+    
 }

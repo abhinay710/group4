@@ -5,6 +5,7 @@ import MenuItems from './components/MenuItems'
 import OrderList from './components/OrderList'
 import CartComponent from './components/CartComponent'
 import StudentList from './components/StudentList'
+import StudentProfile from './components/StudentProfile'
 import EmployeeList from './components/EmployeeList'
 import DiningHallList from './components/DiningHallList'
 
@@ -19,6 +20,11 @@ const routes = [
     path: '/login',
     component: LoginPage,
     meta: { auth: false }
+  },
+  {
+    path: '/my-profile',
+    name: 'StudentProfile',
+    component: StudentProfile,
   },
   {
     path: '/menu-items',

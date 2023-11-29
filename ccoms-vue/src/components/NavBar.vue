@@ -20,6 +20,12 @@
               <li class="nav-item" v-if="$store.state.userName">
                 <router-link to="/orders" class="nav-link text-dark">Orders</router-link>
               </li>
+              <li class="nav-item">
+                <router-link to="/menu-items" v-if="$store.state.userName" class="nav-link text-dark">Menu</router-link>
+              </li>
+              <li class="nav-item">
+                <router-link to="/my-profile" v-if="$store.state.designation === 'student'" class="nav-link text-dark">My Profile</router-link>
+              </li>
               <!-- Orders dropdown with additional reports based on designation -->
               <li class="nav-item dropdown" v-if="$store.state.userName && $store.state.designation === 'manager'">
                 <button class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" type="button"
@@ -60,7 +66,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style>
 
 /* Adjust the max-height and max-width as needed to fit your design */
 .navbar-brand-logo {
@@ -72,4 +78,6 @@ export default {
     color: #fff;
     border: none;
   }
+ 
 </style>
+    

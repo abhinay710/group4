@@ -7,4 +7,6 @@ import com.gfour.ccoms.entities.Student;
 public interface StudentRepo extends CrudRepository<Student, Integer> {
     Student findByGlobalIDAndPassword(String globalId, String password);
 
+  
+
 }

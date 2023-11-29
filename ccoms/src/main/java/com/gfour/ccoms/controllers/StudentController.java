@@ -6,14 +6,18 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.gfour.ccoms.dtos.OrdersDTO;
 import com.gfour.ccoms.dtos.StudentDTO;
 
 import com.gfour.ccoms.entities.Student;
 import com.gfour.ccoms.repositories.StudentRepo;
+import com.gfour.ccoms.services.StudentService;
 
 @RestController
 @RequestMapping("student")
 public class StudentController {
+    @Autowired
+     private StudentService studentService;
     @Autowired
     private StudentRepo studentRepo;
     @Autowired
@@ -28,4 +32,9 @@ public class StudentController {
 
         return ordersList;
     }
+    
+    @GetMapping("/{id}")
+    public StudentDTO getByStudentId(@PathVariable Integer id) {
+        return studentService.findByStudentId(id);
+}
 }

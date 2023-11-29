@@ -145,7 +145,7 @@
     list-style: none;
     padding: 0;
     justify-content: center;
-    margin-top: 20px; /* Adjust as needed */
+    margin-top: 20px; 
   }
   
   .page-item {

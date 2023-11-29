@@ -6,20 +6,26 @@
             <thead>
                 <tr>
                     <th>Order ID</th>
-                    <th>Customer Name</th>
+                    <th v-if="$store.state.designation !== 'student'">Student Name</th>
                     <th>Order Status</th>
                     <th>Total Amount</th>
                     <th>Date</th>
-                    <th>Action</th>
+                    <th>Order Items</th>
+                    <th v-if="$store.state.designation !== 'student'">Action</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(order, index) in displayedOrders" :key="index">
                     <td>{{ order.id }}</td>
-                    <td>{{ order.createdBy }}</td>
+                    <td v-if="$store.state.designation !== 'student'">{{ order.createdBy }}</td>
                     <td>{{ order.ordersStatus.replaceAll("'", "") }}</td>
                     <td>{{ order.totalAmount }}</td>
                     <td>{{ order.createdOn }}</td>
+                    <td >
+                        <button class="btn btn-primary" @click="openModal(order)">
+                            Order Details
+                        </button>
+                    </td>
                     <td v-if="$store.state.designation !== 'student'">
                         <button class="btn btn-primary" v-if="order.ordersStatus === 'in preperation'"
                             @click="updateOrderStatus(order, 'packing')">Pack Order</button>
@@ -28,11 +34,7 @@
                         <button class="btn btn-primary" v-else-if="order.ordersStatus === 'ready to pick up'"
                             @click="updateOrderStatus(order, 'delivered')">Delivered</button>
                     </td>
-                    <td v-if="$store.state.designation === 'student'">
-                        <button class="btn btn-primary" @click="openModal(order)">
-                            Order Details
-                        </button>
-                    </td>
+                    
                 </tr>
             </tbody>
         </table>
