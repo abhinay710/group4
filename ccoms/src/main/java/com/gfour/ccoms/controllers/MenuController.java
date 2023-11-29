@@ -3,6 +3,7 @@ package com.gfour.ccoms.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,24 +24,26 @@ public class MenuController {
     private MenuRepo menuRepo;
     @Autowired
     private MenuService menuService;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @GetMapping("/all")
-    public List<Menu> getAll() {
+    public List<MenuDTO> getAll() {
         Iterable<Menu>  menuItems = menuRepo.findAll();
-        List<Menu> menuList = new ArrayList<>();
+        List<MenuDTO> menuList = new ArrayList<>();
         menuItems.forEach(item -> {
-            menuList.add(item);
+            menuList.add(modelMapper.map(item, MenuDTO.class));
         });
 
         return menuList;
     }
 
     @GetMapping("/dining-hall/{id}")
-    public List<Menu> findByDiningHall(@PathVariable Integer id) {
+    public List<MenuDTO> findByDiningHall(@PathVariable Integer id) {
         Iterable<Menu>  menuItems = menuRepo.findByDiningHallId(id);
-        List<Menu> menuList = new ArrayList<>();
+        List<MenuDTO> menuList = new ArrayList<>();
         menuItems.forEach(item -> {
-            menuList.add(item);
+            menuList.add(modelMapper.map(item, MenuDTO.class));
         });
 
         return menuList;

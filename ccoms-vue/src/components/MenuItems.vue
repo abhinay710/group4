@@ -1,12 +1,22 @@
 <template>
   <div class="container">
     <h2 class="mt-5 mb-4 text-center">Menu</h2>
+    <div class="mb-4">
+      <label for="diningHallDropdown">Select Dining Hall:</label>
+      <select v-model="selectedDiningHall" @change="filterMenuItemsByDiningHall" class="form-control"
+        id="diningHallDropdown">
+        <option value="all">All Dining Halls</option>
+        <option v-for="hall in diningHalls" :key="hall.id" :value="hall.id">{{ hall.diningHallName }}</option>
+      </select>
+    </div>
+
+
 
     <div v-for="(diningStation, index) in uniqueDiningStations" :key="index" class="mb-4">
       <h4 class="bg-dark text-white p-2">{{ diningStation }}</h4>
 
       <div class="row">
-        <div v-for="menuItem in filteredMenuItems(diningStation)" :key="menuItem.id" class="col-md-4">
+        <div v-for="menuItem in filteredMenuItemsByStation(diningStation)" :key="menuItem.id" class="col-md-4">
           <div class="card mb-4">
             <div class="card-body">
               <h5 class="card-title">{{ menuItem.itemName }}</h5>
@@ -67,6 +77,7 @@
 
 <script>
 import MenuService from '../services/MenuService';
+import DiningHallService from '@/services/DiningHallService';
 
 /* eslint-disable */
 export default {
@@ -74,7 +85,10 @@ export default {
   data() {
     return {
       menuItems: [],
+      filteredMenuItems: [],
+      diningHalls: [],
       nutritionalInfoDetails: null,
+      selectedDiningHall: 'all'
     };
   },
   computed: {
@@ -87,11 +101,29 @@ export default {
     getMenuItems() {
       MenuService.getMenuItems().then((response) => {
         this.menuItems = response.data;
+        this.filteredMenuItems = response.data;
       });
     },
-    filteredMenuItems(diningStation) {
+    async getDiningHalls(forceRefresh) {
+      try {
+        const response = await DiningHallService.getDiningHalls({ forceRefresh });
+        this.diningHalls = response.data;
+      } catch (error) {
+        console.error('Error fetching dinigHalls:', error);
+      }
+    },
+    filteredMenuItemsByStation(diningStation) {
       // Filter menu items based on the selected dining station
-      return this.menuItems.filter((item) => item.diningStation === diningStation);
+      return this.filteredMenuItems.filter((item) => item.diningStation === diningStation);
+    },
+    filterMenuItemsByDiningHall() {
+      // Filter menu items based on the selected dining station
+      if (this.selectedDiningHall === 'all') {
+         this.filteredMenuItems = [...this.menuItems];
+      } else {
+        this.filteredMenuItems = this.menuItems.filter((item) => item.diningHall.id === this.selectedDiningHall);
+      }
+    
     },
     addToCart(item) {
       let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
@@ -138,6 +170,7 @@ export default {
   },
   created() {
     this.getMenuItems();
+    this.getDiningHalls();
   },
 };
 /* eslint-enable */
