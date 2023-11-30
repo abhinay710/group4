@@ -6,6 +6,11 @@ class MenuService {
     getMenuItems() {
         return axios.get(MENU_API + 'all');
     }
+
+    
+  saveMenu(menu) {
+    return axios.post(MENU_API + 'save', menu);
+  }
 }
 
 export default new MenuService()

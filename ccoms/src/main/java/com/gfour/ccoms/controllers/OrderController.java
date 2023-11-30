@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.gfour.ccoms.dtos.OrdersDTO;
 import com.gfour.ccoms.entities.Orders;
-
+import com.gfour.ccoms.mapper.OrdersMapper;
 import com.gfour.ccoms.repositories.OrdersRepo;
 
 @RestController
@@ -28,8 +28,8 @@ public class OrderController {
     public List<OrdersDTO> getAll() {
         Iterable<Orders>  ordersList = ordersRepo.findAll();
         List<OrdersDTO> ordersDTOList = new ArrayList<>();
-        ordersList.forEach(item -> {
-            ordersDTOList.add(modelMapper.map(item, OrdersDTO.class));
+        ordersList.forEach(order -> {
+            ordersDTOList.add(OrdersMapper.INSTANCE.ordersToOrdersDTO(order));
         });
         ordersDTOList.sort((o1, o2) -> {
             return o2.getId().compareTo(o1.getId());
@@ -42,8 +42,8 @@ public class OrderController {
     public List<OrdersDTO> findByDiningHall(@PathVariable Integer id) {
         Iterable<Orders>  ordersList = ordersRepo.findByDiningHallId(id);
         List<OrdersDTO> ordersDTOList = new ArrayList<>();
-        ordersList.forEach(item -> {
-            ordersDTOList.add(modelMapper.map(item, OrdersDTO.class));
+        ordersList.forEach(order -> {
+            ordersDTOList.add(OrdersMapper.INSTANCE.ordersToOrdersDTO(order));
         });
 
         ordersDTOList.sort((o1, o2) -> {

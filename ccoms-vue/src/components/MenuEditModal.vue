@@ -1,102 +1,176 @@
 <template>
-    <div v-if="showModal" class="modal">
-      <div class="modal-content">
-        <span class="close" @click="closeModal">&times;</span>
-        <h2>Edit Menu Item</h2>
+    <div class="modal fade" ref="menuEditModal" tabindex="-1" role="dialog" aria-labelledby="menuEditModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 v-if="editedMenu.id === undefined" class="modal-title" id="menuEditModalLabel">Add Menu Item</h5>
+            <h5 v-if="editedMenu.id !== undefined" class="modal-title" id="menuEditModalLabel">Edit Menu Item</h5>
   
-    <form @submit.prevent="saveChanges">
-    <label for="itemName">Item Name:</label>
-    <input type="text" v-model="editedMenuItem.itemName" required />
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="closeModal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form @submit.prevent="saveChanges">
+              <!-- Menu Item ID -->
+              <div class="form-group" v-if="editedMenu.id !== undefined">
+                <label for="editMenuItemId">Menu Item ID:</label>
+                <input type="text" v-model="editedMenu.id" class="form-control" id="editMenuItemId" disabled="true">
+              </div>
+  
+              <!-- Item Name -->
+              <div class="form-group">
+                <label for="editItemName">Item Name:</label>
+                <input type="text" v-model="editedMenu.itemName" class="form-control" id="editItemName">
+              </div>
+  
+              <!-- Price -->
+              <div class="form-group">
+                <label for="editPrice">Price:</label>
+                <input type="number" v-model="editedMenu.price" class="form-control" id="editPrice">
+              </div>
+  
+              <!-- Dining Station -->
+              <div class="form-group">
+                <label for="editDiningStation">Dining Station:</label>
+                <input type="text" v-model="editedMenu.diningStation" class="form-control" id="editDiningStation">
+              </div>
+  
+              <!-- Portion -->
+              <div class="form-group">
+                <label for="editPortion">Portion:</label>
+                <input type="text" v-model="editedMenu.portion" class="form-control" id="editPortion">
+              </div>
+  
+              <!-- Calories -->
+              <div class="form-group">
+                <label for="editCalories">Calories:</label>
+                <input type="number" v-model="editedMenu.calories" class="form-control" id="editCalories">
+              </div>
+              <div class="form-group">
+  <label for="editIngredients">Ingredients:</label>
+  <input type="text" v-model="editedMenu.ingredients" class="form-control" id="editIngredients">
+</div>
 
-    <label for="price">Price:</label>
-    <input type="number" v-model="editedMenuItem.price" required />
+<!-- Is Vegan -->
+<div class="form-group">
+  <label for="editIsVegan">Is Vegan:</label>
+  <input type="text" v-model="editedMenu.isVegan" class="form-control" id="editIsVegan">
+</div>
 
-    <label for="diningStation">Dining Station:</label>
-    <input type="text" v-model="editedMenuItem.diningStation" />
+<!-- Contains Gluten -->
+<div class="form-group">
+  <label for="editContainsGluten">Contains Gluten:</label>
+  <input type="text" v-model="editedMenu.containsGluten" class="form-control" id="editContainsGluten">
+</div>
 
-    <label for="portion">Portion:</label>
-    <input type="text" v-model="editedMenuItem.portion" />
+<!-- Contains Dairy -->
+<div class="form-group">
+  <label for="editContainsDairy">Contains Dairy:</label>
+  <input type="text" v-model="editedMenu.containsDairy" class="form-control" id="editContainsDairy">
+</div>
 
-    <label for="calories">Calories:</label>
-    <input type="number" v-model="editedMenuItem.calories" />
+<!-- Contains Nuts -->
+<div class="form-group">
+  <label for="editContainsNuts">Contains Nuts:</label>
+  <input type="text" v-model="editedMenu.containsNuts" class="form-control" id="editContainsNuts">
+</div>
 
-   
-    <label for="ingredients">Ingredients:</label>
-    <input type="text" v-model="editedMenuItem.ingredients" />
+<!-- Protein -->
+<div class="form-group">
+  <label for="editProtein">Protein:</label>
+  <input type="number" v-model="editedMenu.protein" class="form-control" id="editProtein">
+</div>
 
-    <label for="isVegan">Is Vegan:</label>
-    <input type="checkbox" v-model="editedMenuItem.isVegan" />
+<!-- Total Carbohydrates -->
+<div class="form-group">
+  <label for="editTotalCarbohydrates">Total Carbohydrates:</label>
+  <input type="number" v-model="editedMenu.totalCarbohydrates" class="form-control" id="editTotalCarbohydrates">
+</div>
 
-    <label for="containsGluten">Contains Gluten:</label>
-    <input type="checkbox" v-model="editedMenuItem.containsGluten" />
-    
-    <label for="containsDairy">Contains Dairy:</label>
-    <input type="checkbox" v-model="editedMenuItem.containsDairy" />
+<!-- Cholesterol -->
+<div class="form-group">
+  <label for="editCholesterol">Cholesterol:</label>
+  <input type="number" v-model="editedMenu.cholesterol" class="form-control" id="editCholesterol">
+</div>
 
-    <label for="containsNuts">Contains Nuts:</label>
-    <input type="checkbox" v-model="editedMenuItem.containsNuts" />
+<!-- Total Fat -->
+<div class="form-group">
+  <label for="editTotalFat">Total Fat:</label>
+  <input type="number" v-model="editedMenu.totalFat" class="form-control" id="editTotalFat">
+</div>
 
-    <label for="protein">Protein:</label>
-    <input type="number" v-model="editedMenuItem.protein" />
+<!-- Sodium -->
+<div class="form-group">
+  <label for="editSodium">Sodium:</label>
+  <input type="number" v-model="editedMenu.sodium" class="form-control" id="editSodium">
+</div>
 
-    <label for="totalCarbohydrates">Total Carbohydrates:</label>
-    <input type="number" v-model="editedMenuItem.totalCarbohydrates" />
+<!-- Potassium -->
+<div class="form-group">
+  <label for="editPotassium">Potassium:</label>
+  <input type="number" v-model="editedMenu.potassium" class="form-control" id="editPotassium">
+</div>
 
-    <label for="cholesterol">Cholesterol:</label>
-    <input type="number" v-model="editedMenuItem.cholesterol" />
+<!-- Iron -->
+<div class="form-group">
+  <label for="editIron">Iron:</label>
+  <input type="number" v-model="editedMenu.iron" class="form-control" id="editIron">
+</div>
 
-    <label for="totalFat">Total Fat:</label>
-    <input type="number" v-model="editedMenuItem.totalFat" />
+<!-- Calcium -->
+<div class="form-group">
+  <label for="editCalcium">Calcium:</label>
+  <input type="number" v-model="editedMenu.calcium" class="form-control" id="editCalcium">
+</div>
 
-    <label for="sodium">Sodium:</label>
-    <input type="number" v-model="editedMenuItem.sodium" />
-
-    <label for="potassium">Potassium:</label>
-    <input type="number" v-model="editedMenuItem.potassium" />
-
-    <label for="iron">Iron:</label>
-    <input type="number" v-model="editedMenuItem.iron" />
-
-    <label for="calcium">Calcium:</label>
-    <input type="number" v-model="editedMenuItem.calcium" />
-
-    <button type="submit">Save Changes</button>
-  </form>
+<!-- Dining Hall -->
+<div class="form-group">
+  <label for="editDiningHall">Dining Hall:</label>
+  <input type="text" v-model="editedMenu.diningHall.diningHallName" class="form-control" id="editDiningHall" >
+</div>  
+  
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </template>
   
   <script>
+  import MenuService from '../services/MenuService';
   /* eslint-disable */
   export default {
-    props: {
-      showModal: {
-        type: Boolean,
-        required: true,
-      },
-      editedMenuItem: {
-        type: Object,
-        required: true,
-      },
+    data() {
+      return {
+        editedMenu: {},
+      };
     },
     methods: {
-      closeModal() {
-        this.$emit('close');
+      openModal(menuItem) {
+        if (menuItem) {
+          this.editedMenu = { ...menuItem };
+        }
+        $(this.$refs.menuEditModal).modal('show');
       },
-      saveChanges() {
-        // Validate the form if needed
+      closeModal() {
+        this.editedMenu = {};
+        $(this.$refs.menuEditModal).modal('hide');
+      },
+      async saveChanges() {
+        try {
+          await MenuService.saveMenu(this.editedMenu);
   
-        // Emit an event to save the changes
-        this.$emit('save', this.editedMenuItem);
-  
-        // Close the modal
-        this.closeModal();
+          this.closeModal();
+        } catch (error) {
+          console.error('Error updating menu item:', error);
+        }
       },
     },
   };
   </script>
   
-  <style scoped>
-  /* Add your styles as needed */
-  </style>
+  <style scoped></style>
   

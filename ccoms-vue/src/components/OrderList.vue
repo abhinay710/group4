@@ -174,7 +174,7 @@ export default {
 };
 </script>
   
-<style scoped>
+<style>
 h2 {
     margin: 20px;
 }
