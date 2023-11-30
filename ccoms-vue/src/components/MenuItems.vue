@@ -107,6 +107,7 @@ export default {
       try {
         const response = await DiningHallService.getDiningHalls({ forceRefresh });
         this.diningHalls = response.data;
+        this.selectedDiningHall = this.diningHalls[1];
       } catch (error) {
         console.error('Error fetching dinigHalls:', error);
       }

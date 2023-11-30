@@ -36,6 +36,8 @@
                   <router-link to="/student-list" class="dropdown-item">Generate Student Report</router-link>
                   <router-link to="/employee-list" class="dropdown-item">Generate Employee Report</router-link>
                   <router-link to="/dining-hall-list" class="dropdown-item">Generate Dining Hall Report</router-link>
+                  <router-link to="/order-list" class="dropdown-item">Generate Order Report</router-link>
+                  <router-link to="/menu-list" class="dropdown-item">Generate Menu Report</router-link>
                 </div>
               </li>
               <!-- Cart for students -->
