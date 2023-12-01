@@ -1,17 +1,18 @@
 <template>
-  <div class="container">
+  <div class="container" >
     <h2 class="mt-5 mb-4 text-center">Menu</h2>
     <div class="mb-4">
-      <label for="diningHallDropdown">Select Dining Hall:</label>
-      <select v-model="selectedDiningHall" @change="filterMenuItemsByDiningHall" class="form-control"
-        id="diningHallDropdown">
-        <option v-for="hall in diningHalls" :key="hall.id" :value="hall.id">{{ hall.diningHallName }}</option>
-      </select>
-    </div>
+  <label for="diningHallDropdown">Select Dining Hall:</label>
+  <select v-model="selectedDiningHall" @change="filterMenuItemsByDiningHall" class="form-control" id="diningHallDropdown">
+    <option v-for="hall in diningHalls" :key="hall.id" :value="hall.id">{{ hall.diningHallName }}</option>
+  </select>
+</div>
 
 
 
-    <div v-for="(diningStation, index) in uniqueDiningStations" :key="index" class="mb-4">
+
+<div v-if="isDiningHallSelected">
+    <div  v-for="(diningStation, index) in uniqueDiningStations" :key="index" class="mb-4">
       <h4 class="bg-dark text-white p-2">{{ diningStation }}</h4>
 
       <div class="row">
@@ -32,6 +33,7 @@
         </div>
       </div>
     </div>
+    </div>
 
     <!-- Nutritional Info Modal -->
     <div v-if="nutritionalInfoDetails" class="modal fade" id="nutritionalInfoModal" tabindex="-1" role="dialog"
@@ -44,7 +46,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" >
             <!-- Display nutritional information details here -->
             <p><strong>Item Name:</strong> {{ nutritionalInfoDetails.itemName }}</p>
             <p><strong>Portion:</strong> {{ nutritionalInfoDetails.portion }}</p>
@@ -71,15 +73,25 @@
         </div>
       </div>
     </div>
+    
   </div>
+
+ 
+
 </template>
 
 <script>
 import MenuService from '../services/MenuService';
 import DiningHallService from '@/services/DiningHallService';
+import MenuEditModal from './MenuEditModal.vue';
+
 
 /* eslint-disable */
 export default {
+  components: {
+    'menu-edit-modal': MenuEditModal,
+  },
+
   name: 'MenuItems',
   data() {
     return {
@@ -94,6 +106,9 @@ export default {
     uniqueDiningStations() {
       // Get unique dining stations
       return [...new Set(this.menuItems.map((item) => item.diningStation))];
+    },
+    isDiningHallSelected() {
+      return this.selectedDiningHall !== 'all';
     },
   },
   methods: {
