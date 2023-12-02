@@ -17,11 +17,11 @@ export default new Vuex.Store({
       return false;
     },
     isManagerLoggedIn(state) {
-        if (state.designation === 'manager') {
-          return true;
-        }
+      if (state.designation === 'manager') {
+        return true;
+      }
 
-        return false;
+      return false;
     },
     isEmployeeLoggedIn(state) {
       if (state.designation === 'employee') {
@@ -29,7 +29,7 @@ export default new Vuex.Store({
       }
 
       return false;
-  }
+    }
   },
   mutations: {
     login(state, loginDetails) {
@@ -38,6 +38,7 @@ export default new Vuex.Store({
       localStorage.setItem('userName', loginDetails.userName);
       localStorage.setItem('id', loginDetails.userId)
       localStorage.setItem('designation', loginDetails.designation);
+      localStorage.setItem('name', loginDetails.name);
     },
     logout(state) {
       state.userName = "";

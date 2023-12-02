@@ -11,7 +11,7 @@
                     <th>Total Amount</th>
                     <th>Date</th>
                     <th>Order Items</th>
-                    
+
                 </tr>
             </thead>
             <tbody>
@@ -21,13 +21,13 @@
                     <td>{{ order.ordersStatus.replaceAll("'", "") }}</td>
                     <td>{{ order.totalAmount }}</td>
                     <td>{{ order.createdOn }}</td>
-                    <td >
+                    <td>
                         <button class="btn btn-primary" @click="openModal(order)">
                             Order Details
                         </button>
                     </td>
-                    
-                    
+
+
                 </tr>
             </tbody>
         </table>

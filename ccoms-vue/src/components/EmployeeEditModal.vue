@@ -49,8 +49,8 @@
             <div class="form-group">
               <label for="editRole">Role:</label>
               <select v-model="editedEmployee.role" class="form-control" id="editRole">
-                <option >employee</option>
-                <option >manager</option>
+                <option>employee</option>
+                <option>manager</option>
               </select>
             </div>
 
@@ -59,7 +59,10 @@
               <label for="editEmailID">Email ID:</label>
               <input type="text" v-model="editedEmployee.emailID" class="form-control" id="editEmailID">
             </div>
-
+            <div class="form-group">
+              <label for="editPassword">password:</label>
+              <input type="text" v-model="editedEmployee.password" class="form-control" id="editPassword">
+            </div>
             <!-- Phone Number -->
             <div class="form-group">
               <label for="editPhoneNum">Phone Number:</label>
@@ -127,6 +130,12 @@ export default {
     },
     async saveChanges() {
       try {
+        if (!this.editedEmployee.id) {
+          this.editedEmployee.createdBy = localStorage.getItem('name');
+          this.editedEmployee.createdOn = new Date();
+        }
+        this.editedEmployee.updatedBy = localStorage.getItem('name');
+
         await EmployeeService.saveEmployee(this.editedEmployee);
 
         this.closeModal();

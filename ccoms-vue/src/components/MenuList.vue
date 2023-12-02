@@ -32,9 +32,6 @@
           <td><button class="btn btn-primary" @click="openModal(menuItem)">
               Nutritional Info
             </button></td>
-
-
-
           <td>
             <!-- Edit Menu Item Button -->
             <button class="btn btn-primary" @click="openEditMenuItemModal(menuItem)">Edit</button>
@@ -42,46 +39,6 @@
         </tr>
       </tbody>
     </table>
-    <div v-if="nutritionalInfoDetails" class="modal fade" id="nutritionalInfoModal" tabindex="-1" role="dialog"
-      aria-labelledby="nutritionalInfoModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document" style="z-index: 1050;">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="nutritionalInfoModalLabel">Nutritional Info</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="closeModal">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <!-- Display nutritional information details here -->
-            <p><strong>Item Name:</strong> {{ nutritionalInfoDetails.itemName }}</p>
-            <p><strong>Portion:</strong> {{ nutritionalInfoDetails.portion }}</p>
-            <p><strong>Calories:</strong> {{ nutritionalInfoDetails.calories }}</p>
-            <p><strong>Ingredients:</strong> {{ nutritionalInfoDetails.ingredients }}</p>
-            <p><strong>Is Vegan:</strong> {{ nutritionalInfoDetails.isVegan }}</p>
-            <p><strong>Contains Gluten:</strong> {{ nutritionalInfoDetails.containsGluten }}</p>
-            <p><strong>Contains Dairy:</strong> {{ nutritionalInfoDetails.containsDairy }}</p>
-            <p><strong>Contains Nuts:</strong> {{ nutritionalInfoDetails.containsNuts }}</p>
-            <p><strong>Protein:</strong> {{ nutritionalInfoDetails.protein }}</p>
-            <p><strong>Total Carbohydrates:</strong> {{ nutritionalInfoDetails.totalCarbohydrates }}</p>
-            <p><strong>Cholesterol:</strong> {{ nutritionalInfoDetails.cholesterol }}</p>
-            <p><strong>Total Fat:</strong> {{ nutritionalInfoDetails.totalFat }}</p>
-            <p><strong>Sodium:</strong> {{ nutritionalInfoDetails.sodium }}</p>
-            <p><strong>Potassium:</strong> {{ nutritionalInfoDetails.potassium }}</p>
-            <p><strong>Iron:</strong> {{ nutritionalInfoDetails.iron }}</p>
-            <p><strong>Calcium:</strong> {{ nutritionalInfoDetails.calcium }}</p>
-
-          </div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="closeModal">Close</button>
-          </div>
-        </div>
-      </div>
-      <menu-edit-modal ref="menuEditModal" :menu="menuToEdit" :diningHalls="diningHalls" />
-    </div>
-
-
     <!-- Pagination -->
     <nav>
       <ul class="pagination">
@@ -97,9 +54,6 @@
       </ul>
     </nav>
 
-
-    <!-- MenuItemEditModal Component -->
-    <menu-item-edit-modal ref="menuItemEditModal" :menuItem="menuItemToEdit" />
     <div v-if="nutritionalInfoDetails" class="modal fade" id="nutritionalInfoModal" tabindex="-1" role="dialog"
       aria-labelledby="nutritionalInfoModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document" style="z-index: 1050;">
@@ -220,12 +174,9 @@ export default {
       this.nutritionalInfoDetails = null;
       $('#nutritionalInfoModal').modal('hide');
     },
-    openAddMenuItemModal() {
-      this.$refs.menuItemAddModal.openModal();
-    },
     openEditMenuItemModal(menuItem) {
       this.menuItemToEdit = menuItem;
-      this.$refs.menuItemEditModal.openModal(menuItem);
+      this.$refs.menuEditModal.openModal(menuItem);
     },
     prevPage() {
       if (this.currentPage > 1) {

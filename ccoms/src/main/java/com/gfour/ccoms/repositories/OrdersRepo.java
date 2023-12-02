@@ -12,5 +12,5 @@ public interface OrdersRepo extends CrudRepository<Orders, Integer> {
     Iterable<Orders> findByStudent(Student studnet);
 
     List<Orders> findByDiningHallId(Integer diningHallId);
-
+    List<Orders> findAllByOrderByIdDesc();
 }

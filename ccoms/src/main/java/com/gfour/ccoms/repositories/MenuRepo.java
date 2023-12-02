@@ -8,5 +8,5 @@ import com.gfour.ccoms.entities.Menu;
 
 public interface MenuRepo extends JpaRepository<Menu, Integer> {
     List<Menu> findByDiningHallId(Integer diningHallId);
-
+    List<Menu> findAllByOrderByIdDesc();
 }

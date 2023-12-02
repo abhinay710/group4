@@ -26,7 +26,7 @@ public class OrderController {
 
     @GetMapping("/all")
     public List<OrdersDTO> getAll() {
-        Iterable<Orders>  ordersList = ordersRepo.findAll();
+        Iterable<Orders>  ordersList = ordersRepo.findAllByOrderByIdDesc();
         List<OrdersDTO> ordersDTOList = new ArrayList<>();
         ordersList.forEach(order -> {
             ordersDTOList.add(OrdersMapper.INSTANCE.ordersToOrdersDTO(order));

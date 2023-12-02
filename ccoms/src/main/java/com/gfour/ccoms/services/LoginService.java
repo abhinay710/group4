@@ -23,9 +23,11 @@ public class LoginService {
         if (loginDTO.getDesignation().equals("student")) {
             student = studentRepo.findByGlobalIDAndPassword(loginDTO.getUserName(), loginDTO.getPassword());
             loginDTO.setUserId(student.getId());
+            loginDTO.setName(student.getFirstName() + " " + student.getLastName());
         } else {
             employee = employeeRepo.findByEmailIDAndPassword(loginDTO.getUserName(), loginDTO.getPassword());
             loginDTO.setUserId(employee.getId());
+            loginDTO.setName(employee.getFirstName() + " " + employee.getLastName());
         }
 
         if (student == null && employee == null) {

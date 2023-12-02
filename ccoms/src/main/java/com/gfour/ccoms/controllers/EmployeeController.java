@@ -25,7 +25,7 @@ public class EmployeeController {
 
     @GetMapping("/all")
     public List<EmployeeDTO> getAll() {
-        Iterable<Employee>  employee = employeeRepo.findAll();
+        Iterable<Employee>  employee = employeeRepo.findAllByOrderByIdDesc();
         List<EmployeeDTO> ordersList = new ArrayList<>();
         employee.forEach(item -> {
             ordersList.add(modelMapper.map(item, EmployeeDTO.class));
@@ -35,7 +35,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/save")
-    public EmployeeDTO saveEmp(@RequestBody EmployeeDTO employeeDTO) {
+    public EmployeeDTO saveEmp(@RequestBody EmployeeDTO employeeDTO) throws Exception {
         return employeeService.save(employeeDTO);
     }
 }

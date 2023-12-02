@@ -14,14 +14,12 @@
             <ul class="navbar-nav ml-auto">
               <!-- Menu item for all users -->
               <li class="nav-item">
-                <router-link to="/menu-items" v-if="$store.state.userName" class="nav-link text-dark">Menu</router-link>
+                <router-link to="/menu-items" v-if="$store.state.designation === 'student'" class="nav-link text-dark">Menu</router-link>
+                <router-link to="/menu-list" v-if="$store.state.designation === 'employee'" class="nav-link text-dark">Menu</router-link>
               </li>
               <!-- Orders option in navbar -->
               <li class="nav-item" v-if="$store.state.userName">
                 <router-link to="/orders" class="nav-link text-dark">Orders</router-link>
-              </li>
-              <li class="nav-item">
-                <router-link to="/menu-items" v-if="$store.state.userName" class="nav-link text-dark">Menu</router-link>
               </li>
               <li class="nav-item">
                 <router-link to="/my-profile" v-if="$store.state.designation === 'student'" class="nav-link text-dark">My Profile</router-link>

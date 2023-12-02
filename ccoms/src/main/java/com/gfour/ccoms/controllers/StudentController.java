@@ -25,7 +25,7 @@ public class StudentController {
     private ModelMapper modelMapper;
     @GetMapping("/all")
     public List<StudentDTO> getAll() {
-        Iterable<Student>  student = studentRepo.findAll();
+        Iterable<Student>  student = studentRepo.findAllByOrderByIdDesc();
         List<StudentDTO> ordersList = new ArrayList<>();
         student.forEach(item -> {
             ordersList.add(modelMapper.map(item, StudentDTO.class));

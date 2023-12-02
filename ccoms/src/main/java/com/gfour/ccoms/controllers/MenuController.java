@@ -29,7 +29,7 @@ public class MenuController {
 
     @GetMapping("/all")
     public List<MenuDTO> getAll() {
-        Iterable<Menu>  menuItems = menuRepo.findAll();
+        Iterable<Menu>  menuItems = menuRepo.findAllByOrderByIdDesc();
         List<MenuDTO> menuList = new ArrayList<>();
         menuItems.forEach(item -> {
             menuList.add(modelMapper.map(item, MenuDTO.class));

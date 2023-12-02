@@ -5,7 +5,7 @@
     <div v-if="studentData">
       <form @submit.prevent="saveChanges">
         <table class="table">
-          
+
           <tbody>
             <tr>
               <td>Student ID</td>
@@ -27,7 +27,7 @@
               <td>Password</td>
               <td><input type="text" v-model="studentData.password" /></td>
             </tr>
-            
+
             <tr>
               <td>Phone Number</td>
               <td><input type="text" v-model="studentData.phoneNum" /></td>
@@ -46,7 +46,7 @@
                 <input type="text" v-model="studentData.zipCode" />
               </td>
             </tr>
-            
+
           </tbody>
         </table>
 
@@ -115,9 +115,10 @@ h2 {
   border-bottom: 2px solid #dee2e6;
   background-color: #f8f9fa;
 }
+
 .gold {
-    background-color: gold;
-    color: #000000;
-    border: none;
-  }
+  background-color: gold;
+  color: #000000;
+  border: none;
+}
 </style>

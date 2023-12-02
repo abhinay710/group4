@@ -8,9 +8,6 @@
   </select>
 </div>
 
-
-
-
 <div v-if="isDiningHallSelected">
     <div  v-for="(diningStation, index) in uniqueDiningStations" :key="index" class="mb-4">
       <h4 class="bg-dark text-white p-2">{{ diningStation }}</h4>
@@ -73,10 +70,10 @@
         </div>
       </div>
     </div>
-    
+
   </div>
 
- 
+
 
 </template>
 
@@ -122,6 +119,9 @@ export default {
       try {
         const response = await DiningHallService.getDiningHalls({ forceRefresh });
         this.diningHalls = response.data;
+        if (localStorage.getItem('diningHallId')) {
+          this.selectedDiningHall = this.diningHalls.find(hall => hall.id === Number(localStorage.getItem('diningHallId'))).id;
+        }
       } catch (error) {
         console.error('Error fetching dinigHalls:', error);
       }
@@ -135,7 +135,7 @@ export default {
       
       this.filteredMenuItems = this.menuItems.filter((item) => item.diningHall.id === this.selectedDiningHall);
       localStorage.setItem('diningHallId', this.selectedDiningHall);
-    
+      localStorage.setItem('cartItems', JSON.stringify([]));
     },
     addToCart(item) {
       let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];

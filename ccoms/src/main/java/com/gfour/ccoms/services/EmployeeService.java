@@ -15,7 +15,10 @@ public class EmployeeService {
     @Autowired
     ModelMapper modelMapper;
 
-    public EmployeeDTO save(EmployeeDTO employeeDTO) {
+    public EmployeeDTO save(EmployeeDTO employeeDTO) throws Exception {
+        if (employeeDTO.getId() == null && Boolean.TRUE.equals(employeeRepo.existsByEmailID(employeeDTO.getEmailID()))) {
+            throw new Exception("user already exists with the same user name");
+        }
         Employee employee = modelMapper.map(employeeDTO, Employee.class);
         employeeRepo.save(employee);
 

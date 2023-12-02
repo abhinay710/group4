@@ -2,7 +2,8 @@
   <div>
     <div class="position-relative page-item">
       <h2><strong>EMPLOYEES</strong></h2>
-      <div class="position-absolute top-0 end-0 mt-1"><button class="btn btn-primary" @click="openEditEmployeeModal(undefined, diningHalls)">Add Employee</button></div>
+      <div class="position-absolute top-0 end-0 mt-1"><button class="btn btn-primary"
+          @click="openEditEmployeeModal(undefined, diningHalls)">Add Employee</button></div>
     </div>
     <table class="table">
       <thead>
@@ -34,7 +35,7 @@
           <td>{{ employee.phoneNum }}</td>
           <td>{{ getAddress(employee) }}</td>
           <td>{{ employee.createdBy }}</td>
-          <td>{{ employee.createdOn }}</td>
+          <td>{{ formattedDate(employee.createdOn) }}</td>
           <td>{{ employee.updatedBy }}</td>
           <td>
             <!-- Edit Employee Button -->
@@ -59,23 +60,17 @@
       </ul>
     </nav>
 
-    <!-- EmployeeAddModal Component -->
-    <employee-add-modal ref="employeeAddModal" />
-
-    <!-- EmployeeEditModal Component -->
-    <employee-edit-modal ref="employeeEditModal" :employee="employeeToEdit"  :diningHalls="diningHalls"/>
+    <employee-edit-modal ref="employeeEditModal" :employee="employeeToEdit" :diningHalls="diningHalls" />
   </div>
 </template>
   
 <script>
 import EmployeeService from '../services/EmployeeService';
 import DiningHallService from '../services/DiningHallService';
-import EmployeeAddModal from './EmployeeAddModal.vue';
 import EmployeeEditModal from './EmployeeEditModal.vue';
 
 export default {
   components: {
-    'employee-add-modal': EmployeeAddModal,
     'employee-edit-modal': EmployeeEditModal,
   },
   data() {
@@ -115,9 +110,17 @@ export default {
         console.error('Error fetching dinigHalls:', error);
       }
     },
+    formattedDate(date) {
+      const inputDateString = date;
+      const dateObject = new Date(inputDateString);
 
-    openAddEmployeeModal() {
-      this.$refs.employeeAddModal.openModal();
+      const day = dateObject.getDate().toString().padStart(2, '0');
+      const month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
+      const year = dateObject.getFullYear();
+      // const hours = dateObject.getHours().toString().padStart(2, '0');
+      // const minutes = dateObject.getMinutes().toString().padStart(2, '0');
+      // ${hours}:${minutes}
+      return `${day}/${month}/${year}`;
     },
     openEditEmployeeModal(employee) {
       this.employeeToEdit = employee;

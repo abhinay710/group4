@@ -20,8 +20,8 @@
                     <td v-if="$store.state.designation !== 'student'">{{ order.createdBy }}</td>
                     <td>{{ order.ordersStatus.replaceAll("'", "") }}</td>
                     <td>{{ order.totalAmount }}</td>
-                    <td>{{ order.createdOn }}</td>
-                    <td >
+                    <td>{{ formattedDate(order.createdOn) }}</td>
+                    <td>
                         <button class="btn btn-primary" @click="openModal(order)">
                             Order Details
                         </button>
@@ -34,7 +34,7 @@
                         <button class="btn btn-primary" v-else-if="order.ordersStatus === 'ready to pick up'"
                             @click="updateOrderStatus(order, 'delivered')">Delivered</button>
                     </td>
-                    
+
                 </tr>
             </tbody>
         </table>
@@ -115,6 +115,7 @@ export default {
             const end = start + this.pageSize;
             return this.orders.slice(start, end);
         },
+
     },
     methods: {
         async getOrders(forceRefresh) {
@@ -131,6 +132,18 @@ export default {
                 // Handle the error, e.g., show a user-friendly message
             }
 
+        },
+        formattedDate(date) {
+            const inputDateString = date;
+            const dateObject = new Date(inputDateString);
+
+            const day = dateObject.getDate().toString().padStart(2, '0');
+            const month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
+            const year = dateObject.getFullYear();
+            // const hours = dateObject.getHours().toString().padStart(2, '0');
+            // const minutes = dateObject.getMinutes().toString().padStart(2, '0');
+            // ${hours}:${minutes}
+            return `${day}/${month}/${year}`;
         },
         prevPage() {
             if (this.currentPage > 1) {

@@ -11,7 +11,7 @@ class StudentService {
   }
   saveStudent(student) {
     return axios.post(STUDENT_API + 'save', student);
-}
+  }
 }
 
 export default new StudentService()

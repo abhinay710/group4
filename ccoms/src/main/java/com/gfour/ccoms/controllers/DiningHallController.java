@@ -34,7 +34,7 @@ public class DiningHallController {
 
     @GetMapping("/all")
     public List<DiningHallDTO> getAll() {
-        Iterable<DiningHall>  diningHalls = diningHallRepo.findAll();
+        List<DiningHall>  diningHalls = diningHallRepo.findAllByOrderByIdDesc();
         List<DiningHallDTO> diningHallList = new ArrayList<>();
         diningHalls.forEach(item -> {
             diningHallList.add(modelMapper.map(item, DiningHallDTO.class));
